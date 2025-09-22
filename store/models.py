@@ -49,8 +49,9 @@ class Node(models.Model):
     contacts = models.OneToOneField(Contacts, on_delete=models.CASCADE, verbose_name="Контакты")
     products = models.ManyToManyField(Product, verbose_name="Продукты")
     level = models.IntegerField(choices=LEVEL_CHOICES, null=True, blank=True, verbose_name="Уровень иерархии")
-    supplier = models.ForeignKey("self", on_delete=models.CASCADE, related_name="children", verbose_name="Поставщик",
-                                 null=True, blank=True)
+    supplier = models.ForeignKey(
+        "self", on_delete=models.CASCADE, related_name="children", verbose_name="Поставщик", null=True, blank=True
+    )
     debt = models.DecimalField(max_digits=15, decimal_places=2, default=0.00, verbose_name="Задолженность")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
 
