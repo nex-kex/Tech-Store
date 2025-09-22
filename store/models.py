@@ -22,7 +22,7 @@ class Product(models.Model):
 class Contacts(models.Model):
     """Класс для описания контактов одного звена сети"""
 
-    email = models.EmailField(verbose_name="Email")
+    email = models.EmailField(verbose_name="Email", unique=True)
     country = models.CharField(max_length=20, verbose_name="Страна")
     city = models.CharField(max_length=20, verbose_name="Город")
     street = models.CharField(max_length=30, verbose_name="Улица")
@@ -39,11 +39,18 @@ class Contacts(models.Model):
 class Node(models.Model):
     """Класс для описания модели звена сети"""
 
+    LEVEL_CHOICES = [
+        (0, "Завод"),
+        (1, "Розничная сеть"),
+        (2, "Индивидуальный предприниматель"),
+    ]
+
     name = models.CharField(max_length=50, verbose_name="Название")
     contacts = models.OneToOneField(Contacts, on_delete=models.CASCADE, verbose_name="Контакты")
     products = models.ManyToManyField(Product, verbose_name="Продукты")
-    level = models.IntegerField(verbose_name="Уровень иерархии")
-    supplier = models.ForeignKey("self", on_delete=models.CASCADE, related_name="children", verbose_name="Поставщик")
+    level = models.IntegerField(choices=LEVEL_CHOICES, null=True, blank=True, verbose_name="Уровень иерархии")
+    supplier = models.ForeignKey("self", on_delete=models.CASCADE, related_name="children", verbose_name="Поставщик",
+                                 null=True, blank=True)
     debt = models.DecimalField(max_digits=15, decimal_places=2, default=0.00, verbose_name="Задолженность")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
 
