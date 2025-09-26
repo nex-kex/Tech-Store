@@ -17,8 +17,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Node)
 class NodeAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "level", "debt", "contacts__city"]
-    list_filter = ["level", "contacts__city"]
+    list_display = ["id", "name", "level", "debt", "contacts__country", "contacts__city"]
+    list_filter = ["level", "contacts__country", "contacts__city"]
     actions = ["clear_debt_action"]
 
     def clear_debt_action(self, request, queryset):
