@@ -32,4 +32,6 @@ line-length = 119
 ignore_missing_imports = true
 exclude = [
     "config/",
+    "/migrations/",
+    "/admin.py"
 ]
