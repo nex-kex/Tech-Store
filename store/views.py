@@ -28,7 +28,6 @@ class NodeViewSet(viewsets.ModelViewSet):
     """ViewSet класс для CRUD поставщиков."""
 
     queryset = Node.objects.all()
-    # permission_classes = [IsActiveEmployee]
 
     def get_serializer_class(self):
         if self.action == "create":
